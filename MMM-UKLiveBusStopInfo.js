@@ -142,42 +142,46 @@ Module.register("MMM-UKLiveBusStopInfo", {
                 timeTabledCell.innerHTML = bus.timetableDeparture;
                 timeTabledCell.className = "timeTabled";
                 row.appendChild(timeTabledCell);
+                
+                if (this.hasExpected) {
+                    // only show realtime and delay cells if the transport api returned an expected departure time
 
-                if (this.config.showRealTime) {
-                    //Real Time Feedback for Departure
-                    var realTimeCell = document.createElement("td");
-                    realTimeCell.innerHTML = "(" + bus.expectedDeparture + ")";
-                    realTimeCell.className = "expTime";
-                    row.appendChild(realTimeCell);
-                }
-
-                if (this.config.showDelay) {
-                    //Delay Departure
-                    var delayCell = document.createElement("td");
-
-                    if (bus.delay > 1 || bus.delay < -1) {
-                        label = " mins ";
-                    } else {
-                        label = " min ";
+                    if (this.config.showRealTime) {
+                        //Real Time Feedback for Departure
+                        var realTimeCell = document.createElement("td");
+                        realTimeCell.innerHTML = "(" + bus.expectedDeparture + ")";
+                        realTimeCell.className = "expTime";
+                        row.appendChild(realTimeCell);
                     }
 
-                    if (bus.delay < 0) {
-                        delayCell.innerHTML = Math.abs(bus.delay) + label + "late";
-                        delayCell.className = "late";
-                    } else if (bus.delay > 0) {
-                        delayCell.innerHTML = Math.abs(bus.delay) + label + "early";
-                        delayCell.className = "early";
-                    } else {
-                        if (this.config.nextBuses.toLowerCase() === "yes") {
-                            delayCell.innerHTML = " On Time ";
-                            delayCell.className = "nonews";
+                    if (this.config.showDelay) {
+                        //Delay Departure
+                        var delayCell = document.createElement("td");
+
+                        if (bus.delay > 1 || bus.delay < -1) {
+                            label = " mins ";
                         } else {
-                            delayCell.innerHTML = " Scheduled";
-                            delayCell.className = "nonews";
+                            label = " min ";
                         }
-                    }
 
-                    row.appendChild(delayCell);
+                        if (bus.delay < 0) {
+                            delayCell.innerHTML = Math.abs(bus.delay) + label + "late";
+                            delayCell.className = "late";
+                        } else if (bus.delay > 0) {
+                            delayCell.innerHTML = Math.abs(bus.delay) + label + "early";
+                            delayCell.className = "early";
+                        } else {
+                            if (this.config.nextBuses.toLowerCase() === "yes") {
+                                delayCell.innerHTML = " On Time ";
+                                delayCell.className = "nonews";
+                            } else {
+                                delayCell.innerHTML = " Scheduled";
+                                delayCell.className = "nonews";
+                            }
+                        }
+
+                        row.appendChild(delayCell);
+                    }
                 }
 
                 if (this.config.fade && this.config.fadePoint < 1) {
@@ -282,6 +286,7 @@ Module.register("MMM-UKLiveBusStopInfo", {
                             var thisDate;
                             var thisTimetableTime;
                             var thisLiveTime;
+                            var hasExpected;
 
                             if (this.config.nextBuses.toLowerCase() === "yes") {
                                 //NextBuses Is On, so we need to use best & expected values - assuming they're present!
@@ -297,8 +302,10 @@ Module.register("MMM-UKLiveBusStopInfo", {
                                 //live time
                                 if (bus.expected_departure_time !== null) {
                                     thisLiveTime = bus.expected_departure_time;
+                                    hasExpected = true;
                                 } else {
                                     thisLiveTime = bus.best_departure_estimate;
+                                    hasExpected = false;
                                 }
 
                             } else {
