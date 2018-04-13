@@ -146,14 +146,6 @@ Module.register("MMM-UKLiveBusStopInfo", {
                 if (bus.hasExpected) {
                     // only show realtime and delay cells if the transport api returned an expected departure time
 
-                    if (this.config.showRealTime) {
-                        //Real Time Feedback for Departure
-                        var realTimeCell = document.createElement("td");
-                        realTimeCell.innerHTML = "(" + bus.expectedDeparture + ")";
-                        realTimeCell.className = "expTime";
-                        row.appendChild(realTimeCell);
-                    }
-
                     if (this.config.showDelay) {
                         //Delay Departure
                         var delayCell = document.createElement("td");
@@ -182,6 +174,15 @@ Module.register("MMM-UKLiveBusStopInfo", {
 
                         row.appendChild(delayCell);
                     }
+
+                    if (this.config.showRealTime && bus.delay != 0) {
+                        //Real Time Feedback for Departure
+                        var realTimeCell = document.createElement("td");
+                        realTimeCell.innerHTML = "(" + bus.expectedDeparture + ")";
+                        realTimeCell.className = "expTime";
+                        row.appendChild(realTimeCell);
+                    }
+
                 }
 
                 if (this.config.fade && this.config.fadePoint < 1) {
@@ -354,7 +355,8 @@ Module.register("MMM-UKLiveBusStopInfo", {
                                     direction: bus.direction,
                                     timetableDeparture: thisTimetableTime,
                                     expectedDeparture: thisLiveTime,
-                                    delay: delay
+                                    delay: delay,
+                                    hasExpected: hasExpected
                                 });
                             }
                         }
