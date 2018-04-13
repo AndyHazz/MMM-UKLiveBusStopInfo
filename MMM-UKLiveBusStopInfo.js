@@ -143,7 +143,7 @@ Module.register("MMM-UKLiveBusStopInfo", {
                 timeTabledCell.className = "timeTabled";
                 row.appendChild(timeTabledCell);
                 
-                if (this.hasExpected) {
+                if (bus.hasExpected) {
                     // only show realtime and delay cells if the transport api returned an expected departure time
 
                     if (this.config.showRealTime) {
