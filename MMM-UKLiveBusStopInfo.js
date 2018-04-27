@@ -295,11 +295,11 @@ Module.register("MMM-UKLiveBusStopInfo", {
                                 if(bus.expected_departure_date !== null){
                                     thisDate = bus.expected_departure_date;
                                 } else {
-                                    Log.error('NextBus info is missing - falling back to timetabled info');
+                                    Log.info('NextBus info is missing - falling back to timetabled info');
                                     thisDate = bus.date;
                                 }
                                 //timetabled time
-                                thisTimetableTime = bus.best_departure_estimate;
+                                thisTimetableTime = bus.aimed_departure_time;
                                 //live time
                                 if (bus.expected_departure_time !== null) {
                                     thisLiveTime = bus.expected_departure_time;
@@ -310,15 +310,11 @@ Module.register("MMM-UKLiveBusStopInfo", {
                                 }
 
                             } else {
-                                //NextBuses Is Off, so we need to use aimed & expected values
+                                //NextBuses Is Off, so we need to use aimed values
                                 //Date
                                 thisDate = bus.date;
                                 //timetabled time
-                                if (bus.aimed_departure_time !== null) {
-                                    thisTimetableTime = bus.aimed_departure_time;
-                                } else {
-                                    thisTimetableTime = bus.expected_departure_time;
-                                }
+                                thisTimetableTime = bus.aimed_departure_time;
                                 //live time
                                 thisLiveTime = bus.best_departure_estimate;
                             }
