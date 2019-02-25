@@ -64,7 +64,7 @@ Module.register("MMM-UKLiveBusStopInfo", {
         this.updateTimer = null;
 
         this.url = encodeURI(this.config.apiBase + this.config.atcocode + '/live.json' + this.getParams());
-
+	Log.info("BUS API URL = " + this.url);
         this.updateBusInfo(this);
     },
 
