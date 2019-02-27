@@ -64,7 +64,7 @@ Module.register("MMM-UKLiveBusStopInfo", {
         this.updateTimer = null;
 
         this.url = encodeURI(this.config.apiBase + this.config.atcocode + '/live.json' + this.getParams());
-
+	Log.info("BUS API URL = " + this.url);
         this.updateBusInfo(this);
     },
 
@@ -72,6 +72,9 @@ Module.register("MMM-UKLiveBusStopInfo", {
     updateBusInfo: function(self) {
         if (this.hidden != true) {
             self.sendSocketNotification('GET_BUSINFO', { 'url': self.url });
+        }
+	else { // not running update this time, but still need to schedule the next check
+            this.scheduleUpdate(this.config.updateInterval);
         }
     },
 
@@ -237,6 +240,9 @@ Module.register("MMM-UKLiveBusStopInfo", {
         //Define message holder
         this.buses.message = null;
 
+        //Parse ISO date format
+        var requestDate = new Date(data.request_time);
+
         //Check we have data back from API
         if (typeof data !== 'undefined' && data !== null) {
 
@@ -261,7 +267,7 @@ Module.register("MMM-UKLiveBusStopInfo", {
                 stopName = "Departures";
             }
             //Set value
-            this.buses.stopName = stopName;
+            this.buses.stopName = stopName + " - " + requestDate.toLocaleTimeString();
 
             //Check we have route info
             if (typeof data.departures !== 'undefined' && data.departures !== null) {
