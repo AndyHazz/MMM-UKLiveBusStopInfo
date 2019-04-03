@@ -47,7 +47,7 @@ Module.register("MMM-UKLiveBusStopInfo", {
 
     //Define header for module.
     getHeader: function() {
-        return this.config.header;
+        return this.data.header;
     },
 
     // Define start sequence.
@@ -107,7 +107,7 @@ Module.register("MMM-UKLiveBusStopInfo", {
         }
 
         if (this.buses.stopName !== null) {
-            this.config.header = this.buses.stopName;
+            this.data.header = this.buses.stopName;
         }
 
         //Dump bus data
