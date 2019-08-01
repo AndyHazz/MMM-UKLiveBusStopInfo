@@ -73,9 +73,7 @@ Module.register("MMM-UKLiveBusStopInfo", {
         if (this.hidden != true) {
             self.sendSocketNotification('GET_BUSINFO', { 'url': self.url });
         }
-	else { // not running update this time, but still need to schedule the next check
-            this.scheduleUpdate(this.config.updateInterval);
-        }
+        this.scheduleUpdate(this.config.updateInterval);
     },
 
     // Override dom generator.
