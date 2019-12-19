@@ -14,7 +14,7 @@ Magic Mirror Module for UK bus information. Returns real-time info about a SPECI
 Git clone from this repository into the modules sub-directory of the Magic Mirror installation, change directory into the newly cloned code and then run npm install.
 
 ```bash
-git clone https://github.com/nwootton/MMM-UKLiveBusStopInfo.git
+git clone https://github.com/AndyHazz/MMM-UKLiveBusStopInfo.git
 cd MMM-UKLiveBusStopInfo
 npm install
 ```
