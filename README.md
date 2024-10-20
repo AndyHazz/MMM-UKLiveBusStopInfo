@@ -1,6 +1,9 @@
 # MMM-UKLiveBusStopInfo
 Additional Module for MagicMirror²  https://github.com/MichMich/MagicMirror
 
+> [!IMPORTANT]
+> Transport API now only allows 30 hits per day (down from 1000) making this module relatively useless without a monthly fee. I don't use this module any more myself, so can't say for sure if it will continue to work. As an alternative, most regions will have a website you can scrape live bus data from without an api, using my MMM-Scrapey module: https://github.com/AndyHazz/MMM-Scrapey
+
 Forked from original (no longer supported) module by nwootton.
 Main changes are to only show realtime info if available for that specific bus (to make it clear if bus is actually on time or just doesn't have any realtime updates).
 
